@@ -1,17 +1,24 @@
 
 import { useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Home, Login, Public } from "./container/public";
+import path from "./ultis/path";
 
 
 function App() {
 	const { test } = useSelector(state => state.app);
 	console.log(test);
 	return (
-
 		<div>
 			<div>
-				app
+				<Routes>
+					<Route path={path.PUBLIC} element={<Public />} >
+						<Route path={path.HOME} element={<Home />} />
+						<Route path={path.LOGIN} element={<Login />} />
+					</Route>
+				</Routes>
 			</div>
 			<div>
 				<ToastContainer
