@@ -1,7 +1,7 @@
 import React from 'react'
 
-import icons from '../ultis/icons'
-const { FiSearch } = icons;
+import Icons from '../ultis/icons'
+const { FiSearch } = Icons;
 const Search = () => {
     return (
         <div className='w-full flex items-center'>

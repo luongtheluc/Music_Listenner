@@ -1,8 +1,8 @@
 import React from 'react'
-import icons from '../ultis/icons'
+import Icons from '../ultis/icons'
 import Search from './Search';
 
-const { HiArrowNarrowRight, HiArrowNarrowLeft } = icons;
+const { HiArrowNarrowRight, HiArrowNarrowLeft } = Icons;
 
 const Header = () => {
     return (
@@ -17,7 +17,7 @@ const Header = () => {
                 </div>
             </div>
             <div>
-                dang nhap
+                login
             </div>
         </div>
     )
