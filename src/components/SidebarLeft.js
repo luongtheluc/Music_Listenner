@@ -9,7 +9,7 @@ const activeStyle = 'px-[25px] py-2 font-bold text-[#0F7070] text-[13px] flex ga
 
 const sidebarLeft = () => {
     return (
-        <div className='flex flex-col'>
+        <div className='h-full flex flex-col'>
             <div className='w-full h-[70px] py-[15px] px-[25px] flex justify-start items-center'>
                 <img src={logo} alt="logo" className='w-[120px] h-10' />
             </div>
