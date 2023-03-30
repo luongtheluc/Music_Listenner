@@ -1,8 +1,10 @@
-import { MdOutlineLibraryMusic } from 'react-icons/md'
+import { MdOutlineLibraryMusic, MdSkipNext, MdSkipPrevious } from 'react-icons/md'
 import { BiNetworkChart, BiNews } from 'react-icons/bi'
-import { BsFillRecordCircleFill, BsArrowRight, BsArrowLeft } from 'react-icons/bs'
+import { BsFillRecordCircleFill, BsArrowRight, BsArrowLeft, BsThreeDotsVertical, BsFillPlayFill, BsPauseFill, BsMusicNoteBeamed, BsDot } from 'react-icons/bs'
 import { HiArrowNarrowLeft, HiArrowNarrowRight } from 'react-icons/hi'
 import { FiSearch } from 'react-icons/fi';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
+import { CiRepeat, CiShuffle } from 'react-icons/ci'
 const icons = {
     MdOutlineLibraryMusic, //cá nhân
     BiNetworkChart, // chart
@@ -13,6 +15,17 @@ const icons = {
     HiArrowNarrowLeft,
     HiArrowNarrowRight,
     FiSearch,
+    AiFillHeart,
+    AiOutlineHeart,
+    BsThreeDotsVertical,
+    CiRepeat,
+    MdSkipNext,
+    MdSkipPrevious,
+    CiShuffle,
+    BsFillPlayFill,
+    BsPauseFill,
+    BsMusicNoteBeamed,
+    BsDot,
 }
 
 export default icons;

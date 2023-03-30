@@ -1,16 +1,22 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+
 import logo from '../assets/logo.svg';
 import { sidebarMenu } from '../ultis/menu';
+import path from '../ultis/path';
 
 
 const notActiveStyle = 'px-[25px] py-2 font-bold text-[#32323D] text-[13px] flex gap-[12px] items-center';
 const activeStyle = 'px-[25px] py-2 font-bold text-[#0F7070] text-[13px] flex gap-[12px] items-center';
 
-const sidebarLeft = () => {
+const SidebarLeft = () => {
+
+    const navigate = useNavigate();
     return (
         <div className='h-full flex flex-col bg-main-200'>
-            <div className='w-full h-[70px] py-[15px] px-[25px] flex justify-start items-center'>
+            <div className='w-full h-[70px] py-[15px] px-[25px] flex justify-start items-center cursor-pointer'
+                onClick={() => navigate(path.HOME)}
+            >
                 <img src={logo} alt="logo" className='w-[120px] h-10' />
             </div>
             <div className='flex flex-col'>
@@ -30,4 +36,4 @@ const sidebarLeft = () => {
     )
 }
 
-export default sidebarLeft
+export default SidebarLeft

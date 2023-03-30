@@ -1,33 +1,25 @@
-
-import * as apis from '../../api'
+import * as apis from "../../api";
 import actionTypes from "./actionTypes";
 
 export const getHome = () => async (dispatch) => {
     try {
-
         const response = await apis.getHome();
-
-
 
         if (response?.data.err === 0) {
             dispatch({
                 type: actionTypes.GET_HOME,
                 homeData: response.data.data.items,
-
-            })
-        }
-        else {
+            });
+        } else {
             dispatch({
                 type: actionTypes.GET_HOME,
                 homeData: null,
-
-            })
+            });
         }
     } catch (error) {
         dispatch({
             type: actionTypes.GET_HOME,
             homeData: null,
-
-        })
+        });
     }
-}
+};
