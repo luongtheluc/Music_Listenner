@@ -4,6 +4,10 @@ import Scrollbars from 'react-custom-scrollbars-2'
 import { useParams } from 'react-router-dom'
 import * as apis from '../../api'
 import Lists from '../../components/Lists'
+import { useDispatch } from 'react-redux'
+import * as actions from '../../store/actions'
+
+
 
 
 const Album = () => {
@@ -11,14 +15,16 @@ const Album = () => {
     const { pid } = useParams()
 
     const [playlistData, setplaylistData] = useState({})
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const fetchDetailPlaylist = async () => {
             const response = await apis.apiGetDetailPlaylist(pid);
-            console.log(response.data?.data)
+
             if (response?.data.err === 0) {
-                console.log(response.data?.data)
-                setplaylistData(response.data?.data)
+
+                setplaylistData(response?.data?.data)
+                dispatch(actions.setPlaylists(response?.data?.data?.song?.items))
             }
         }
         fetchDetailPlaylist()
@@ -55,7 +61,7 @@ const Album = () => {
                         <span>{playlistData?.sortDescription}</span>
                     </span>
 
-                    <Lists songs={playlistData?.song?.items} totalDuration={playlistData?.song?.totalDuration} />
+                    <Lists totalDuration={playlistData?.song?.totalDuration} />
 
                 </div>
             </Scrollbars>

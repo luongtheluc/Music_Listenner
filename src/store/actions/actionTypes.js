@@ -5,6 +5,7 @@ const actionTypes = {
 
     //music
     PLAY: 'PLAY',
+    PLAYLIST: 'PLAYLIST',
 
 }
 
