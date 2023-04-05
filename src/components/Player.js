@@ -118,7 +118,7 @@ const Player = () => {
     }
 
     const handleShuffle = () => {
-
+        const randomIndex = Math.round(Math.random() * songs?.length)
     }
 
 
@@ -149,7 +149,7 @@ const Player = () => {
                         onClick={() => {
                             setIsShuffle(prev => !prev)
                         }}
-                        className={`cursor-pointer ${isShuffle && 'text-gray-600'}`}
+                        className={`cursor-pointer ${isShuffle && 'text-purple-700'}`}
                         title='Bật phát ngẫu nhiên'>
                         <CiShuffle size={24} />
                     </span>
