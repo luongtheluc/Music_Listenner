@@ -6,12 +6,26 @@ import icons from '../ultis/icons';
 import * as actions from '../store/actions'
 import moment from 'moment';
 import { toast } from 'react-toastify';
-import { MdRepeatOneOn } from 'react-icons/md';
+import LoadingSong from './LoadingSong';
 
 
 var intervalId
-const { AiOutlineHeart, MdOutlineRepeatOne, BsThreeDotsVertical, MdSkipNext, MdSkipPrevious, CiRepeat, BsFillPlayFill, BsPauseFill, CiShuffle } = icons;
-const Player = () => {
+const {
+    AiOutlineHeart,
+    MdOutlineRepeatOne,
+    BsThreeDotsVertical,
+    MdSkipNext,
+    MdSkipPrevious,
+    CiRepeat,
+    BsFillPlayFill,
+    BsPauseFill,
+    CiShuffle,
+    BsMusicNoteList,
+    SlVolume1,
+    SlVolume2,
+    SlVolumeOff,
+} = icons;
+const Player = ({ setIsShowRightSidebar }) => {
 
     const { curSongId, isPlaying, songs } = useSelector(state => state.music)
     const [songInfo, setSongInfo] = useState(null)
@@ -22,12 +36,17 @@ const Player = () => {
     const trackRef = useRef()
     const [isShuffle, setIsShuffle] = useState(false)
     const [repeatMode, setRepeatMode] = useState(0)
+    const [isLoadedSource, setIsLoadedSource] = useState(true)
+
+    const [volume, setVolume] = useState(100)
 
     useEffect(() => {
         const fetchDetailSong = async () => {
+            setIsLoadedSource(false)
             const [res1, res2] = await Promise.all([
                 apis.apiGetDetailSong(curSongId),
-                apis.apiGetSong(curSongId)
+                apis.apiGetSong(curSongId),
+                setIsLoadedSource(true)
             ])
 
             if (res1.data.err === 0) {
@@ -76,7 +95,7 @@ const Player = () => {
         audio.pause()
         audio.load();
 
-        if (isPlaying && thumbRef.current) {
+        if (isPlaying && thumbRef.current.style) {
             audio.play();
             intervalId = setInterval(() => {
                 var percent = Math.round(audio.currentTime * 10000 / songInfo?.duration) / 100
@@ -87,6 +106,14 @@ const Player = () => {
         console.log(audio)
 
     }, [audio])
+
+    useEffect(() => {
+        audio.volume = volume / 100;
+
+    }, [volume])
+
+
+
 
     const handleTogglePlayMusic = () => {
         if (isPlaying) {
@@ -190,7 +217,8 @@ const Player = () => {
                     <span
                         onClick={handleTogglePlayMusic}
                         className='p-1 border border-gray-700 rounded-full hover:bg-main-500'>
-                        {isPlaying ? <BsPauseFill size={30} /> : <BsFillPlayFill size={30} />}
+                        {!isLoadedSource ? <LoadingSong /> : isPlaying ? <BsPauseFill size={30} /> : <BsFillPlayFill size={30} />}
+
                     </span>
                     <span onClick={handleNextSong} className={`${!songs ? 'text-gray-500 ' : 'cursor-pointer'}`}>
                         <MdSkipNext size={20} />
@@ -216,7 +244,30 @@ const Player = () => {
                     <span className=''> {moment.utc(songInfo?.duration * 1000).format('mm:ss')}</span>
                 </div>
             </div>
-            <div className='w-[30%] flex-auto'> Volume</div>
+            <div className='w-[30%] flex-auto flex items-center justify-end gap-4'>
+
+                <div className='flex gap-2 items-center'>
+                    <span
+                        onClick={() => {
+                            setVolume(prev => +prev === 0 ? 70 : 0)
+                        }}
+                        className='cursor-pointer'
+                    >
+                        {+volume >= 50 ? <SlVolume2 /> : +volume === 0 ? <SlVolumeOff /> : <SlVolume1 />}
+                    </span>
+                    <input type="range" step={1} min={0} max={100}
+                        value={volume}
+                        onChange={(e) => {
+                            setVolume(e.target.value)
+                        }} />
+                </div>
+
+                <span
+                    onClick={() => setIsShowRightSidebar(prev => !prev)}
+                    className='p-1 rounded-sm bg-main-500 hover:opacity-100 cursor-pointer'>
+                    <BsMusicNoteList size={20} />
+                </span>
+            </div>
         </div>
     )
 }
