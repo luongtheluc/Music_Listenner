@@ -1,7 +1,7 @@
 import React from 'react'
 import Icons from '../ultis/icons'
 import Search from './Search';
-
+import { Login } from '../container/public';
 const { HiArrowNarrowRight, HiArrowNarrowLeft } = Icons;
 
 const Header = () => {
@@ -17,7 +17,7 @@ const Header = () => {
                 </div>
             </div>
             <div>
-                login
+                <Login />
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import { MdOutlineLibraryMusic, MdSkipNext, MdSkipPrevious } from 'react-icons/md'
+import { MdOutlineLibraryMusic, MdSkipNext, MdSkipPrevious, MdOutlineRepeatOne } from 'react-icons/md'
 import { BiNetworkChart, BiNews } from 'react-icons/bi'
 import { BsFillRecordCircleFill, BsArrowRight, BsArrowLeft, BsThreeDotsVertical, BsFillPlayFill, BsPauseFill, BsMusicNoteBeamed, BsDot } from 'react-icons/bs'
 import { HiArrowNarrowLeft, HiArrowNarrowRight } from 'react-icons/hi'
@@ -26,6 +26,7 @@ const icons = {
     BsPauseFill,
     BsMusicNoteBeamed,
     BsDot,
+    MdOutlineRepeatOne,
 }
 
 export default icons;

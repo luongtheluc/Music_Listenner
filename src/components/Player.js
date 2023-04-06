@@ -6,10 +6,11 @@ import icons from '../ultis/icons';
 import * as actions from '../store/actions'
 import moment from 'moment';
 import { toast } from 'react-toastify';
+import { MdRepeatOneOn } from 'react-icons/md';
 
 
 var intervalId
-const { AiOutlineHeart, AiFillHeart, BsThreeDotsVertical, MdSkipNext, MdSkipPrevious, CiRepeat, BsFillPlayFill, BsPauseFill, CiShuffle } = icons;
+const { AiOutlineHeart, MdOutlineRepeatOne, BsThreeDotsVertical, MdSkipNext, MdSkipPrevious, CiRepeat, BsFillPlayFill, BsPauseFill, CiShuffle } = icons;
 const Player = () => {
 
     const { curSongId, isPlaying, songs } = useSelector(state => state.music)
@@ -20,7 +21,7 @@ const Player = () => {
     const thumbRef = useRef()
     const trackRef = useRef()
     const [isShuffle, setIsShuffle] = useState(false)
-
+    const [repeatMode, setRepeatMode] = useState(0)
 
     useEffect(() => {
         const fetchDetailSong = async () => {
@@ -48,13 +49,34 @@ const Player = () => {
         fetchDetailSong()
     }, [curSongId])
 
+    useEffect(() => {
+        const handleEnded = () => {
+            if (isShuffle) {
+                handleShuffle()
+            }
+            else {
+                if (repeatMode) {
+                    repeatMode === 1 ? handleRepeatOne() : handleNextSong()
+                }
+                else {
+                    audio.pause()
+                    dispatch(actions.play(false))
+                }
+            }
+        }
+
+        audio.addEventListener('ended', handleEnded);
+        return () => {
+            audio.removeEventListener('ended', handleEnded);
+        }
+    }, [audio, isShuffle, repeatMode])
 
     useEffect(() => {
         intervalId && clearInterval(intervalId)
         audio.pause()
         audio.load();
 
-        if (isPlaying) {
+        if (isPlaying && thumbRef.current) {
             audio.play();
             intervalId = setInterval(() => {
                 var percent = Math.round(audio.currentTime * 10000 / songInfo?.duration) / 100
@@ -75,6 +97,12 @@ const Player = () => {
             audio.play();
             dispatch(actions.play(true))
         }
+    }
+
+    const handleRepeatOne = () => {
+        console.log("repeat one");
+        audio.pause();
+        audio.play();
     }
 
     const handleClickProgressbar = (e) => {
@@ -118,7 +146,10 @@ const Player = () => {
     }
 
     const handleShuffle = () => {
-        const randomIndex = Math.round(Math.random() * songs?.length)
+
+        const randomIndex = Math.round(Math.random() * songs?.length) - 1
+        dispatch(actions.setCurSongId(songs[randomIndex].encodeId))
+        dispatch(actions.play(true));
     }
 
 
@@ -146,10 +177,8 @@ const Player = () => {
             <div className='w-[40%] flex items-center justify-center gap-2 flex-col flex-auto py-2'>
                 <div className='flex gap-8 justify-center items-center'>
                     <span
-                        onClick={() => {
-                            setIsShuffle(prev => !prev)
-                        }}
-                        className={`cursor-pointer ${isShuffle && 'text-purple-700'}`}
+                        onClick={() => setIsShuffle(prev => !prev)}
+                        className={`cursor-pointer ${isShuffle ? 'text-purple-700' : 'text-black'}`}
                         title='Bật phát ngẫu nhiên'>
                         <CiShuffle size={24} />
                     </span>
@@ -167,9 +196,10 @@ const Player = () => {
                         <MdSkipNext size={20} />
                     </span>
                     <span
-                        className='cursor-pointer'
+                        onClick={() => setRepeatMode(prev => prev === 2 ? 0 : prev + 1)}
+                        className={`cursor-pointer ${repeatMode ? 'text-purple-700' : 'text-black'}`}
                         title='Bật phát lại'>
-                        <CiRepeat size={20} />
+                        {repeatMode === 1 ? <MdOutlineRepeatOne size={20} /> : <CiRepeat size={20} />}
                     </span>
                 </div>
                 <div className='w-full flex items-center justify-center gap-3 text-xs'>

@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Login = () => {
     return (
-        <div>Login</div>
+        <div><button className='cursor-pointer'>LOGIN</button></div>
     )
 }
 
