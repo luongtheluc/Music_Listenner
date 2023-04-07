@@ -5,8 +5,9 @@ const instance = axios.create({
 });
 
 // Add a request interceptor
-axios.interceptors.request.use(function (config) {
-    // Do something before request is sent
+instance.interceptors.request.use(function (config) {
+    const token = localStorage.getItem('persist:auth')
+    console.log(token)
     return config;
 }, function (error) {
     // Do something with request error
@@ -14,7 +15,7 @@ axios.interceptors.request.use(function (config) {
 });
 
 // Add a response interceptor
-axios.interceptors.response.use(function (response) {
+instance.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response;

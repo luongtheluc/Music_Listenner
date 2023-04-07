@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import Icons from '../ultis/icons'
 import Search from './Search';
-import { Login } from '../container/public';
+import Button from './Button';
+import { useNavigate } from 'react-router-dom';
+import path from '../ultis/path';
+
 const { HiArrowNarrowRight, HiArrowNarrowLeft } = Icons;
 
 const Header = () => {
+
+    const navigate = useNavigate()
+    const goLogin = useCallback((flag) => {
+        navigate(path.LOGIN, { state: flag })
+    }, [])
+
     return (
         <div className='flex justify-between w-full items-center '>
             <div className='flex gap-6 items-center w-full'>
@@ -16,8 +25,9 @@ const Header = () => {
                     <Search />
                 </div>
             </div>
-            <div>
-                <Login />
+            <div className='w-full flex justify-end items-center gap-4'>
+                <Button text={'Đăng nhập'} textColor={'text-white'} bgColor={'bg-[#35767f]'} onclick={() => goLogin(false)} />
+                <Button text={'Đăng ký'} textColor={'text-white'} bgColor={'bg-[#35767f]'} onclick={() => goLogin(true)} />
             </div>
         </div>
     )
