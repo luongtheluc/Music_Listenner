@@ -16,7 +16,7 @@ const register = asyncHandler(async (req, res) => {
     if (!email || !password || !firstname || !lastname) {
         return res.status(400).json({
             success: false,
-            mes: 'missing',
+            mes: 'missing input',
         })
     }
 
@@ -26,9 +26,19 @@ const register = asyncHandler(async (req, res) => {
     }
     else {
         const newUser = await User.create(req.body);
+        const { password, role, refreshToken, ...userData } = newUser.toObject();
+
+        const accessToken = generateAccessToken(newUser._id, role)
+        //tao refesh token
+        const newRefreshToken = generateRefeshToken(newUser._id);
+        //Luu refesh token vao db
+        await User.findByIdAndUpdate(newUser._id, { newRefreshToken }, { new: true });
+        //luu refesh token vao cookie
+        res.cookie('refreshToken', newRefreshToken, { httpOnly: true, maxAge: refreshTokenExpiresday })
         return res.status(200).json({
-            success: newUser ? true : false,
-            mes: newUser ? 'Register is successfully. Please go login' : 'Something when wrong',
+            success: userData ? true : false,
+            mes: userData ? 'Register is successfully. Please go login' : 'Something when wrong',
+            token: accessToken,
         })
     }
 
@@ -61,7 +71,7 @@ const login = asyncHandler(async (req, res) => {
         res.status(200).json({
             success: true,
             userData: userData,
-            accessToken,
+            token: accessToken,
         })
     }
     else {
