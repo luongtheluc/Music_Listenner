@@ -3,7 +3,6 @@ import { InputFrom, Button } from '../../components'
 import { useLocation, useNavigate } from 'react-router-dom'
 import * as actions from '../../store/actions'
 import { useDispatch, useSelector } from 'react-redux'
-import path from '../../ultis/path'
 
 
 export const Login = () => {

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Icons from '../ultis/icons'
 import Search from './Search';
 import Button from './Button';
@@ -6,6 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import path from '../ultis/path';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../store/actions'
+import * as apis from '../api'
+
+
 const { HiArrowNarrowRight, HiArrowNarrowLeft, BsFillGearFill } = Icons;
 
 const Header = () => {
@@ -15,8 +18,17 @@ const Header = () => {
         navigate(path.LOGIN, { state: flag })
     }, [])
 
-    const { isLoggedIn } = useSelector(state => state.auth)
 
+
+
+    const { isLoggedIn } = useSelector(state => state.auth)
+    useEffect(() => {
+        const getCurrent = async () => {
+            const response = await apis.apiGetCurrent();
+            console.log(response)
+        }
+        isLoggedIn && getCurrent()
+    }, [isLoggedIn])
 
     return (
         <div className='flex justify-between w-full items-center '>
@@ -36,6 +48,7 @@ const Header = () => {
                 </> :
                     <div className='w-full flex items-center justify-end relative gap-6'>
                         <BsFillGearFill size={30} />
+                        {/* <span>{response?.data?.result?.lastname}</span> */}
                         <Button text={'Đăng xuất'} textColor={'text-white'} bgColor={'bg-[#35767f]'} onClick={() => {
                             dispatch(actions.logout())
                         }} />
