@@ -2,9 +2,13 @@ import actionTypes from "../actions/actionTypes";
 
 const initState = {
     curSongId: null,
+    curSongData: null,
     isPlaying: false,
     atAlbum: false,
     songs: null,
+    curAlbumId: null,
+    recentSongs: [],
+    searchData: {}
 }
 
 
@@ -29,6 +33,39 @@ const musicReducer = (state = initState, action) => {
             return {
                 ...state,
                 songs: action.songs || null,
+            }
+        case actionTypes.SET_CUR_SONG_DATA:
+            return {
+                ...state,
+                curSongData: action.data || null,
+            }
+        case actionTypes.SET_CUR_ALBUM_ID:
+            return {
+                ...state,
+                curAlbumId: action.pid || null,
+            }
+        case actionTypes.SET_RECENT:
+            let songs = state.recentSongs
+            if (action.data) {
+                if (state.recentSongs?.some(item => item.sid === action.data.sid)) {
+                    songs = songs.filter((item) => item.sid !== action.data.sid)
+                }
+                if (songs.length > 20) {
+                    songs = songs.filter((item, index, self) => index !== self.length - 1)
+                }
+
+                songs = [action.data, ...songs]
+
+            }
+            return {
+                ...state,
+                recentSongs: songs
+                //? [action.data, ...state.recentSongs] : state.recentSongs
+            }
+        case actionTypes.SEARCH:
+            return {
+                ...state,
+                searchData: action.data || null,
             }
         default:
             return state;

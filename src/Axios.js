@@ -8,7 +8,7 @@ const instance = axios.create({
 instance.interceptors.request.use(function (config) {
     let token = window.localStorage.getItem('persist:auth') && JSON.parse(window.localStorage.getItem('persist:auth'))?.token?.slice(1, -1)
     config.headers = {
-        Authorization: `Bearer ${token}`
+        Authorization: token ? `Bearer ${token}` : null
     }
     return config;
 }, function (error) {

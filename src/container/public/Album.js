@@ -13,17 +13,16 @@ import icons from '../../ultis/icons'
 
 const { BsFillPlayFill } = icons
 
-
-
 const Album = () => {
 
     const { pid } = useParams()
 
     const [playlistData, setplaylistData] = useState({})
     const dispatch = useDispatch()
-    const { curSongId, isPlaying, songs } = useSelector(state => state.music)
+    const { isPlaying } = useSelector(state => state.music)
 
     useEffect(() => {
+        dispatch(actions.setCurAlbumId(pid))
         const fetchDetailPlaylist = async () => {
             const response = await apis.apiGetDetailPlaylist(pid);
 
@@ -37,7 +36,6 @@ const Album = () => {
     }, [pid])
 
     return (
-
         <div className='flex gap-8 w-full h-[80%] px-[59px]'>
             <div className='flex-none w-1/4 flex flex-col items-center gap-2'>
                 <div className='w-full relative overflow-hidden'>
@@ -72,7 +70,7 @@ const Album = () => {
                     </span>
                 </div>
             </div>
-            <Scrollbars style={{ width: '100%', height: '100%' }}>
+            <Scrollbars autoHide style={{ width: '100%', height: '100%' }}>
                 <div className='flex-auto mb-[40px]'>
                     <span className='text-sm'>
                         <span className='text-gray-600'>Lời tựa </span>

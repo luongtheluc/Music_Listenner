@@ -2,11 +2,12 @@ import React, { useCallback, useEffect } from 'react'
 import Icons from '../ultis/icons'
 import Search from './Search';
 import Button from './Button';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import path from '../ultis/path';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../store/actions'
 import * as apis from '../api'
+import { menuManage } from '../ultis/menu';
 
 
 const { HiArrowNarrowRight, HiArrowNarrowLeft, BsFillGearFill } = Icons;
@@ -14,20 +15,17 @@ const { HiArrowNarrowRight, HiArrowNarrowLeft, BsFillGearFill } = Icons;
 const Header = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const { isLoggedIn } = useSelector(state => state.auth)
+    const { currentData } = useSelector(state => state.user)
+
     const goLogin = useCallback((flag) => {
         navigate(path.LOGIN, { state: flag })
     }, [])
 
-
-
-
-    const { isLoggedIn } = useSelector(state => state.auth)
     useEffect(() => {
-        const getCurrent = async () => {
-            const response = await apis.apiGetCurrent();
-            console.log(response)
-        }
-        isLoggedIn && getCurrent()
+        setTimeout(() => {
+            isLoggedIn && dispatch(actions.getCurrentAction())
+        }, 1000)
     }, [isLoggedIn])
 
     return (
@@ -46,9 +44,8 @@ const Header = () => {
                     <Button text={'Đăng nhập'} textColor={'text-white'} bgColor={'bg-[#35767f]'} onClick={() => goLogin(false)} />
                     <Button text={'Đăng ký'} textColor={'text-white'} bgColor={'bg-[#35767f]'} onClick={() => goLogin(true)} />
                 </> :
-                    <div className='w-full flex items-center justify-end relative gap-6'>
-                        <BsFillGearFill size={30} />
-                        {/* <span>{response?.data?.result?.lastname}</span> */}
+                    <div className='w-full flex items-center justify-end gap-6'>
+                        <span>{currentData.lastname + " " + currentData?.firstname}</span>
                         <Button text={'Đăng xuất'} textColor={'text-white'} bgColor={'bg-[#35767f]'} onClick={() => {
                             dispatch(actions.logout())
                         }} />

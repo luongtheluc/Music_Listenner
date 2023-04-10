@@ -1,6 +1,6 @@
 import { MdOutlineLibraryMusic, MdSkipNext, MdSkipPrevious, MdOutlineRepeatOne } from 'react-icons/md'
 import { BiNetworkChart, BiNews } from 'react-icons/bi'
-import { BsFillRecordCircleFill, BsFillGearFill, BsArrowRight, BsArrowLeft, BsThreeDotsVertical, BsFillPlayFill, BsPauseFill, BsMusicNoteBeamed, BsDot, BsMusicNoteList } from 'react-icons/bs'
+import { BsTrash, BsFillRecordCircleFill, BsFillGearFill, BsArrowRight, BsArrowLeft, BsThreeDotsVertical, BsFillPlayFill, BsPauseFill, BsMusicNoteBeamed, BsDot, BsMusicNoteList } from 'react-icons/bs'
 import { HiArrowNarrowLeft, HiArrowNarrowRight } from 'react-icons/hi'
 import { FiSearch } from 'react-icons/fi';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
@@ -34,6 +34,7 @@ const icons = {
     SlVolume2,
     SlVolumeOff,
     BsFillGearFill,
+    BsTrash
 }
 
 export default icons;

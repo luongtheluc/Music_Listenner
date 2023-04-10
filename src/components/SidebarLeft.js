@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import logo from '../assets/logo.svg';
+import logo from '../assets/Logo.png';
 import { sidebarMenu } from '../ultis/menu';
 import path from '../ultis/path';
 

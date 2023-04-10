@@ -3,11 +3,11 @@ import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Home, Login, Personal, Public, Album } from "./container/public";
+import { Home, Login, Personal, Public, Album, Search, SongSearch, SearchAll } from "./container/public";
 import path from "./ultis/path";
 import { useEffect } from "react";
 import * as actions from './store/actions'
-
+import { System, Profile, CreateUser } from "./container/system";
 
 
 
@@ -23,15 +23,23 @@ function App() {
 					<Route path={path.PUBLIC} element={<Public />} >
 						<Route path={path.HOME} element={<Home />} />
 						<Route path={path.LOGIN} element={<Login />} />
-
 						<Route path={path.MYMUSIC} element={<Personal />} />
 						<Route path={path.ALBUM__TITLE__PID} element={<Album />} />
 						<Route path={path.PLAYLIST__TITLE__PID} element={<Album />} />
+						<Route path={path.SEARCH} element={<Search />} >
+							<Route path={path.SEARCH_ALL} element={<SearchAll />} />
+							<Route path={path.SONG} element={<SongSearch />} />
+
+						</Route>
+
+
 
 
 						<Route path={path.STAR} element={<Home />} />
 					</Route>
-
+					<Route path={path.SYSTEM} element={<System />}	>
+						<Route path={path.CREATE_USER} element={<CreateUser />} />
+					</Route>
 				</Routes>
 			</div>
 			<div>

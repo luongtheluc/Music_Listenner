@@ -26,7 +26,6 @@ export const Login = () => {
         setIsRegister(location.state)
     }, [location.state])
     useEffect(() => {
-        console.log(isLoggedIn)
         if (isLoggedIn) {
             navigate('/')
         }
@@ -45,11 +44,9 @@ export const Login = () => {
         }
 
     }
-    console.log(invalidField)
     const validate = (payload) => {
         let invalidCount = 0;
         let feilds = Object.entries(payload);
-        console.log(feilds)
         feilds.forEach(item => {
             if (item[1] === '') {
                 setInvalidField(prev => [...prev, {
@@ -57,7 +54,6 @@ export const Login = () => {
                     message: 'Bạn không được để trống trường này ',
                 }])
                 invalidCount++;
-                console.log("Count: 1 " + invalidCount)
             }
         })
         feilds.forEach(item => {

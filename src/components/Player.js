@@ -46,11 +46,12 @@ const Player = ({ setIsShowRightSidebar }) => {
             const [res1, res2] = await Promise.all([
                 apis.apiGetDetailSong(curSongId),
                 apis.apiGetSong(curSongId),
-                setIsLoadedSource(true)
-            ])
 
+            ])
+            setIsLoadedSource(true)
             if (res1.data.err === 0) {
                 setSongInfo(res1.data.data)
+                dispatch(actions.setCurSongData(res1.data.data))
             }
             if (res2.data.err === 0) {
                 audio.pause()
@@ -103,7 +104,7 @@ const Player = ({ setIsShowRightSidebar }) => {
                 setCurSeconds(Math.round(audio.currentTime))
             }, 200);
         }
-        console.log(audio)
+
 
     }, [audio])
 
@@ -192,11 +193,11 @@ const Player = ({ setIsShowRightSidebar }) => {
                         {songInfo?.artistsNames}
                     </span>
                 </div>
-                <div className='flex gap-4 pl-[8px]'>
-                    <span>
+                <div className='flex gap-4 pl-[8px] '>
+                    <span className='cursor-pointer'>
                         <AiOutlineHeart size={16} />
                     </span>
-                    <span>
+                    <span className='cursor-pointer'>
                         <BsThreeDotsVertical size={16} />
                     </span>
                 </div>

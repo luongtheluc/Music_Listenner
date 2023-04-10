@@ -24,3 +24,16 @@ export const sidebarMenu = [
     },
 
 ]
+
+export const menuManage = [
+    {
+        id: 1,
+        text: 'Profile',
+        path: '/profile'
+    },
+    {
+        id: 2,
+        text: 'Đăng xuất',
+        path: null
+    }
+]

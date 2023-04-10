@@ -31,14 +31,14 @@ const Slider = () => {
             }
             list.forEach(item => {
                 if (item === max) {
-                    sliderElements[item].classList.add('animate-slide-right', 'order-last', 'z-20')
+                    sliderElements[item]?.classList?.add('animate-slide-right', 'order-last', 'z-20')
                 }
                 else {
                     if (item === min) {
-                        sliderElements[item].classList.add('animate-slide-left', 'order-first', 'z-10')
+                        sliderElements[item]?.classList?.add('animate-slide-left', 'order-first', 'z-10')
                     }
                     else {
-                        sliderElements[item].classList.add('animate-slide-left2', 'order-2', 'z-10')
+                        sliderElements[item]?.classList?.add('animate-slide-left2', 'order-2', 'z-10')
                     }
                 }
             })
